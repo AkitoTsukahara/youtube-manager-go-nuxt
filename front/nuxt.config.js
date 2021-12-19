@@ -35,10 +35,17 @@ export default {
   modules: [
     // Doc:https://github.com/nuxt-community/modules/tree/master/packages/bulma
     '@nuxtjs/bulma',
+    '@nuxtjs/axios',
   ],
   /*
   ** Build configuration
   */
+  axios: {
+    baseURL: 'http://localhost:8080/'
+  },
+  proxy: {
+    '/api': '/'
+  },
   build: {
     postcss: {
       preset: {
