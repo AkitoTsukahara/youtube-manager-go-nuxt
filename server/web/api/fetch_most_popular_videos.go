@@ -4,7 +4,7 @@ import (
 	"context"
 	"os"
 
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo"
 	"github.com/sirupsen/logrus"
 	"github.com/valyala/fasthttp"
 	"google.golang.org/api/option"
@@ -16,19 +16,21 @@ func FetchMostPopularVideos() echo.HandlerFunc {
 		key := os.Getenv("API_KEY")
 
 		ctx := context.Background()
-		yts, err := youtube.NewService(ctx, option.WithAPI(key))
+		yts, err := youtube.NewService(ctx, option.WithAPIKey(key))
 		if err != nil {
-			logrus.Fatalf("Error creating new Youtube service: %v", error)
+			logrus.Fatalf("Error creating new Youtube service: %v", err)
 		}
 
+		arg := []string{"id", "snippet"}
 		call := yts.Videos.
-			List("id,snoppet").
+			//List("id,snippet").
+			List(arg).
 			Chart("mostPopular").
 			MaxResults(3)
 
 		res, err := call.Do()
 		if err != nil {
-			logrus.Fatals("Error calling Youtube API: %v", err)
+			logrus.Fatalf("Error calling Youtube API: %v", err)
 		}
 
 		return c.JSON(fasthttp.StatusOK, res)
