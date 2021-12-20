@@ -1,6 +1,7 @@
 package main
 
 import (
+	"server/middlewares"
 	"server/routes"
 
 	"github.com/joho/godotenv"
@@ -28,6 +29,7 @@ func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
 	e.Use(middleware.CORS())
+	e.Use(middlewares.YouTubeService())
 	routes.Init(e)
 	e.Logger.Fatal(e.Start(":8080"))
 
