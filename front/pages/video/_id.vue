@@ -43,9 +43,10 @@
           <p>
             <span>関連動画</span>
           </p>
-          <div v-for="relatedItem in relatedItems">
+          <div v-for="relatedItem in relatedItems" :key="relatedItem.id">
             <hr>
             <nuxt-link
+                v-if="relatedItem.hasOwnProperty('snippet')"
                 :to="`/video/${relatedItem.id.videoId}`"
             >
               <article class="media">
