@@ -43,7 +43,7 @@
           <p>
             <span>関連動画</span>
           </p>
-          <!-- <div v-for="relatedItem in relatedItems">
+          <div v-for="relatedItem in relatedItems">
             <hr>
             <nuxt-link
                 :to="`/video/${relatedItem.id.videoId}`"
@@ -62,7 +62,7 @@
                 </div>
               </article>
             </nuxt-link>
-          </div> -->
+          </div>
         </div>
       </div>
 
@@ -77,9 +77,9 @@
       item() {
         return this.$store.getters.getVideo
       },
-      // relatedItems() {
-      //   return this.$store.getters.getRelatedVideos
-      // },
+      relatedItems() {
+        return this.$store.getters.getRelatedVideos
+      },
       // isLoggedIn() {
       //   return this.$store.getters.isLoggedIn
       // }
@@ -95,9 +95,9 @@
       await store.dispatch('findVideo', {
         uri: ROUTES.GET.VIDEO.replace(':id', route.params.id),
       })
-      // await store.dispatch('fetchRelatedVideos', {
-      //   uri: ROUTES.GET.RELATED.replace(':id', route.params.id),
-      // })
+      await store.dispatch('fetchRelatedVideos', {
+        uri: ROUTES.GET.RELATED.replace(':id', route.params.id),
+      })
     }
   }
 </script>
