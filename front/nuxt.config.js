@@ -28,7 +28,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/vue-youtube'
+    '~/plugins/vue-youtube',
+    '~/plugins/cookies-to-state'
   ],
   /*
   ** Nuxt.js modules
@@ -37,6 +38,7 @@ export default {
     // Doc:https://github.com/nuxt-community/modules/tree/master/packages/bulma
     '@nuxtjs/bulma',
     '@nuxtjs/axios',
+    'cookie-universal-nuxt',
   ],
   /*
   ** Build configuration
