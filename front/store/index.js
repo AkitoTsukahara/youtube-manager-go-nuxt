@@ -1,4 +1,6 @@
 import {createRequestClient} from '~/store/request-client';
+import firebase from '~/plugins/firebase'
+
 export const state = () => ({
   items: [],
   relatedItems: [],
@@ -46,6 +48,21 @@ export const actions = {
     this.$cookies.set('jwt_token', payload)
     commit('mutateToken', payload)
   },
+  async login({commit, dispatch}, payload) {
+    const res = await firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+    const token = await res.user.getIdToken()
+    this.$cookies.set('jwt_token', token)
+    const refreshToken = res.user.refreshToken
+    this.$cookies.set('refresh_token', refreshToken)
+    commit('mutateToken', token)
+    this.app.router.push('/')
+  },
+  async logout({commit}) {
+    await firebase.auth().signOut()
+    commit('mutateToken', null)
+    this.$cookies.remove('jwt_token')
+    this.app.router.push('/')
+    }
 }
 export const mutations = {
   mutatePopularVideos(state, payload) {
@@ -85,5 +102,8 @@ export const getters = {
   },
   getSearchMeta(state) {
     return state.searchMeta
+  },
+  isLoggedIn(state) {
+    return !!state.token
   },
 }
